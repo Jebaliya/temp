@@ -25,8 +25,8 @@ export const welcome = {
 };
 
 export const memories = {
-  title: "A few of my favourites",
-  text: "Moments I'd happily live through again.",
+  title: "A few of our favourites",
+  text: "Moments We'd happily live through again.",
   // Replace the files in /public/images with your own, keeping these names
   // (or change the names here). `position` controls which part of the photo
   // stays in frame when cropped: "center 25%" keeps faces higher up.

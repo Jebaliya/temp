@@ -16,7 +16,7 @@ export const letter = {
   "I hope this year brings you lots of happiness, success, and endless reasons to smile. Stay amazing, always! ✨",
 ],
   signoff: "Always yours,",
-  signature: "Jayveer and Parth",
+  signature: "Shivraj and Parth",
 };
 
 export const finale = {

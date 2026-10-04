@@ -7,7 +7,7 @@
 export const site = {
   name: "Jeel", // <-- her name
   pageTitle: "For you",
-  madeBy: "Made by Jayveer and Parth",
+  madeBy: "Made by Shivraj and Parth",
 };
 
 export const gate = {

@@ -33,6 +33,11 @@ export const memories = {
   photos: [ { src: "/images/photo1.jpg", alt: "Photo 1", caption: "Today isn't just another day…\nToday is the day someone very special was born. 💫💙", position: "center 30%", ratio: "4 / 5" }, { src: "/images/photo2.jpg", alt: "Photo 2", caption: "Some people make ordinary moments feel a little more special just by being there. ✨💙", position: "center 30%", ratio: "1 / 1" }, { src: "/images/photo3.jpg", alt: "Photo 3", caption: "Your kindness, your smile, and the way you make everyone around you feel comfortable are just a few of the many things that make you truly special. 💙✨", position: "center 30%", ratio: "5 / 6" }, { src: "/images/photo4.jpg", alt: "Photo 4", caption: "No matter where life takes us, I hope you always remember how special you are. ♾️💫🧿", position: "center 30%", ratio: "4 / 5" }, { src: "/images/photo5.jpg", alt: "Photo 5", caption: "I hope you always keep that beautiful smile, because it makes even the simplest moments brighter. 💫🧿", position: "center 30%", ratio: "4 / 5" }, ],
 };
 
+export const music = {
+  src: "/images/birthday.mp3",
+  volume: 0.5, // 0 to 1
+};
+
 export const letterHeading = "A note for you";
 
 /** Colors as hex. Change these and the whole site follows. */

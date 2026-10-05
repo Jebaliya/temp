@@ -9,24 +9,32 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December",
 ];
 
+const EMPTY_MESSAGE = "Choose your day and month.";
+
 const field =
   "block w-full appearance-none rounded-xl border bg-white/[.04] px-4 py-3.5 text-lg text-ink [color-scheme:dark] transition-colors";
 
 export default function Gate({ onVerified }: { onVerified: (c: PrivateContent) => void }) {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
-  const [error, setError] = useState(false);
+  const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [leaving, setLeaving] = useState(false);
 
-  const ready = day !== "" && month !== "";
-  const border = error ? "border-rose" : "border-white/15 focus:border-gold";
+  const hasError = message !== "";
+  const border = hasError ? "border-rose" : "border-white/15 focus:border-gold";
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!ready || busy) return;
+    if (busy) return;
+
+    if (!day || !month) {
+      setMessage(EMPTY_MESSAGE);
+      return;
+    }
+
     setBusy(true);
-    setError(false);
+    setMessage("");
     try {
       const res = await fetch("/api/verify", {
         method: "POST",
@@ -38,7 +46,7 @@ export default function Gate({ onVerified }: { onVerified: (c: PrivateContent) =
       setLeaving(true);
       setTimeout(() => onVerified({ letter: data.letter, finale: data.finale }), 600);
     } catch {
-      setError(true);
+      setMessage(gate.error);
       setBusy(false);
     }
   }
@@ -58,36 +66,58 @@ export default function Gate({ onVerified }: { onVerified: (c: PrivateContent) =
           <select
             aria-label="Day"
             value={day}
-            onChange={(e) => { setDay(e.target.value); setError(false); }}
+            onChange={(e) => {
+              setDay(e.target.value);
+              setMessage("");
+            }}
             className={`${field} ${border}`}
           >
-            <option value="" disabled>Day</option>
+            <option value="" disabled>
+              Day
+            </option>
             {Array.from({ length: 31 }, (_, i) => {
               const d = String(i + 1).padStart(2, "0");
-              return <option key={d} value={d}>{i + 1}</option>;
+              return (
+                <option key={d} value={d}>
+                  {i + 1}
+                </option>
+              );
             })}
           </select>
+
           <select
             aria-label="Month"
             value={month}
-            onChange={(e) => { setMonth(e.target.value); setError(false); }}
+            onChange={(e) => {
+              setMonth(e.target.value);
+              setMessage("");
+            }}
             className={`${field} ${border}`}
           >
-            <option value="" disabled>Month</option>
+            <option value="" disabled>
+              Month
+            </option>
             {MONTHS.map((m, i) => {
               const v = String(i + 1).padStart(2, "0");
-              return <option key={v} value={v}>{m}</option>;
+              return (
+                <option key={v} value={v}>
+                  {m}
+                </option>
+              );
             })}
           </select>
         </div>
 
-        <p role="alert" className={`mt-3 min-h-[1.5rem] text-sm text-rose transition-opacity ${error ? "opacity-100" : "opacity-0"}`}>
-          {error ? gate.error : ""}
+        <p
+          role="alert"
+          className={`mt-3 min-h-[1.5rem] text-sm text-rose transition-opacity ${hasError ? "opacity-100" : "opacity-0"}`}
+        >
+          {message}
         </p>
 
         <button
           type="submit"
-          disabled={!ready || busy}
+          disabled={busy}
           className="mt-4 w-full rounded-full bg-gold px-6 py-3.5 font-medium text-night transition active:scale-[.98] enabled:hover:brightness-110 disabled:opacity-40"
         >
           {busy ? "Checking..." : gate.button}
